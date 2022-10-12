@@ -1,8 +1,6 @@
 import csis.Mystery;
 import edu.princeton.cs.algs4.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class A04 {
     //original values
@@ -14,7 +12,8 @@ public class A04 {
             'c', 'd', 'a', 'b', '3', '2', '1', '4',
             'c', 'd', 'a', 'b', '3', '2', '1', '4',
             'c', 'd', 'a', 'b', '3', '2', '1', '4'};
-
+    //TODO https://stackoverflow.com/questions/60068478/create-a-method-to-check-if-sorting-algorithm-is-stable
+    static String[] stabilityTestData = {"5","9","3","9","8","4"}; //TODO: Remove me!
     static final double BILLION = 1_000_000_000;
     static final String [] SORTNAMES = {"Insertion", "Selection", "Merge", "Quick"};
 
@@ -40,9 +39,30 @@ public class A04 {
         //Testing length vs. time (24)
         startTime = System.nanoTime();
         callKnownSortByName(sortName, letterNumTwentyFour);
-        System.out.printf(" * %sSort time for length 24: %.8f seconds.\n\n",
+        System.out.printf(" * %sSort time for length 24: %.8f seconds.\n",
                 sortName,(System.nanoTime()-startTime)/BILLION);
         resetTwentyFour();
+
+        //STABILITY TEST:
+        String stable [] = stabilityTestData;
+        Arrays.sort(stabilityTestData);
+        String test [] = stabilityTestData;
+        callKnownSortByName(sortName,test);
+        System.out.println("\nSTABILITY:");
+
+        //TODO
+        System.out.printf(" * %sSort is Stable: ",
+                sortName);
+        boolean isUnstable = false;
+
+        for (String oneStable : stable) {
+            for(String oneTest : test){
+                if(oneStable != oneTest){
+                    isUnstable = true;
+                }
+            }
+        }
+        System.out.print(isUnstable + "\n\n");
     }
 
     /**
@@ -50,7 +70,7 @@ public class A04 {
      * @param sortName name of the sort we call ex: "Quick" for Quicksort
      * @param arrayToBeSorted array we target with the selected sort
      */
-    private static void callKnownSortByName(String sortName, Character[] arrayToBeSorted) {
+    private static <E> void callKnownSortByName(String sortName, Comparable<E>[] arrayToBeSorted) {
         switch(sortName){
             case "Insertion":
                 Insertion.sort(arrayToBeSorted);
@@ -154,47 +174,6 @@ public class A04 {
                 'c', 'd', 'a', 'b', '3', '2', '1', '4',
                 'c', 'd', 'a', 'b', '3', '2', '1', '4'};
     }
-
-    //FROM CESTABLE ACTIVITY//
-    /**
-     * Reads in data from a csv file that stores year,position,artist,song
-     * in the given order in the first four columns.
-     *
-     * @param csvFile
-     * @return
-     */
-    private static List<Song> getSongs(String csvFile) {
-        In in = new In(csvFile);
-        List<Song> songList = new ArrayList<>();
-
-        if(in.hasNextLine())
-            in.readLine(); // skip header line
-
-        while (in.hasNextLine()) {
-            String line = in.readLine();
-            String[] tokens = line.split(",");
-            int year = getInt(tokens[0]);
-            int position = getInt(tokens[1]);
-            String songName = tokens[2];
-            String artist = tokens[3];
-            Song song = new Song(year,position,songName,artist);
-            songList.add(song);
-        }
-
-        return songList;
-    }
-
-    /**
-     * Removes the double quotes at the beginning and end of the
-     * token and parses it to an integer.
-     *
-     * @param tokens token to be converted to an int value.
-     * @return integer corresponding to the token.
-     */
-    private static int getInt(String tokens) {
-        return Integer.parseInt(tokens.substring(1,(tokens.length()-1)));
-    }
-    //END OF METHODS FROM CESTABLE ACTIVITY//
 
     // = = = = TEST CLIENT = = = = //
     public static void main (String[] args){
