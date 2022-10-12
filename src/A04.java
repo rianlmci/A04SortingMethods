@@ -129,7 +129,7 @@ public class A04 {
      * @param mysterySortNum number of the mystery sort we call ex: 1 for Mystery.sort1
      * @param arrayToBeSorted array we target with the selected mystery sort
      */
-    private static void callMysterySortByNum(int mysterySortNum, Character[] arrayToBeSorted) {
+    private static <E> void callMysterySortByNum(int mysterySortNum, Comparable<E>[] arrayToBeSorted) {
         switch(mysterySortNum){
             case 1:
                 Mystery.sort1(arrayToBeSorted);
