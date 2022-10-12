@@ -2,6 +2,7 @@ import csis.Mystery;
 import edu.princeton.cs.algs4.*;
 import java.util.Arrays;
 
+
 public class A04 {
     //original values
     private static Character [] letterNumEight  = { 'c', 'd', 'a', 'b', '3', '2', '1', '4'};
@@ -43,14 +44,14 @@ public class A04 {
                 sortName,(System.nanoTime()-startTime)/BILLION);
         resetTwentyFour();
 
+
+        //TODO
         //STABILITY TEST:
         String stable [] = stabilityTestData;
         Arrays.sort(stabilityTestData);
         String test [] = stabilityTestData;
         callKnownSortByName(sortName,test);
         System.out.println("\nSTABILITY:");
-
-        //TODO
         System.out.printf(" * %sSort is Stable: ",
                 sortName);
         boolean isUnstable = false;
