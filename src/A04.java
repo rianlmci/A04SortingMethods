@@ -1,192 +1,174 @@
 import csis.Mystery;
 import edu.princeton.cs.algs4.*;
+
 import java.util.Arrays;
 
 
 public class A04 {
-    //original values
-    private static Character [] letterNumEight  = { 'c', 'd', 'a', 'b', '3', '2', '1', '4'};
-    private static Character [] letterNumSixteen = {
-            'c', 'd', 'a', 'b', '3', '2', '1', '4',
-            'c', 'd', 'a', 'b', '3', '2', '1', '4'};
-    private static Character [] letterNumTwentyFour = {
-            'c', 'd', 'a', 'b', '3', '2', '1', '4',
-            'c', 'd', 'a', 'b', '3', '2', '1', '4',
-            'c', 'd', 'a', 'b', '3', '2', '1', '4'};
-    //TODO https://stackoverflow.com/questions/60068478/create-a-method-to-check-if-sorting-algorithm-is-stable
-    static String[] stabilityTestData = {"5","9","3","9","8","4"}; //TODO: Remove me!
     static final double BILLION = 1_000_000_000;
-    static final String [] SORTNAMES = {"Insertion", "Selection", "Merge", "Quick"};
 
-    private static void getKnownSortTestResults(String sortName){
+    private static void getKnownSortTestResults(){
         //TIME TESTS:
-        System.out.println("= = = = TESTING " + sortName.toUpperCase() + " SORT = = = =");
-        System.out.println("\nTIME:");
+        //System.out.println("= = = = TESTING " +  + " SORT = = = =");
+        //System.out.println("\nTIME:");//TODO need different header
+        int size = 1;
+        boolean insertionTimedOut = false;
+        boolean selectionTimedOut = false;
+        boolean mergeTimedOut = false;
+        boolean quickTimedOut = false;
+        boolean allTimedOut = false;
 
-        //Testing length vs. time (8)
-        long startTime = System.nanoTime();
-        callKnownSortByName(sortName, letterNumEight);
-        System.out.printf(" * %sSort time for length  8: %.8f seconds.\n",
-                sortName, (System.nanoTime()-startTime)/BILLION);
-        resetEight();
-
-        //Testing length vs. time (16)
-        startTime = System.nanoTime();
-        callKnownSortByName(sortName, letterNumSixteen);
-        System.out.printf(" * %sSort time for length 16: %.8f seconds.\n",
-                sortName,(System.nanoTime()-startTime)/BILLION);
-        resetSixteen();
-
-        //Testing length vs. time (24)
-        startTime = System.nanoTime();
-        callKnownSortByName(sortName, letterNumTwentyFour);
-        System.out.printf(" * %sSort time for length 24: %.8f seconds.\n",
-                sortName,(System.nanoTime()-startTime)/BILLION);
-        resetTwentyFour();
-
-
-        //TODO
-        //STABILITY TEST:
-        String stable [] = stabilityTestData;
-        Arrays.sort(stabilityTestData);
-        String test [] = stabilityTestData;
-        callKnownSortByName(sortName,test);
-        System.out.println("\nSTABILITY:");
-        System.out.printf(" * %sSort is Stable: ",
-                sortName);
-        boolean isUnstable = false;
-
-        for (String oneStable : stable) {
-            for(String oneTest : test){
-                if(oneStable != oneTest){
-                    isUnstable = true;
+        for (int i = 0; !allTimedOut ; i++) {
+            allTimedOut = insertionTimedOut && selectionTimedOut && mergeTimedOut && quickTimedOut;
+            Integer[] array = ArrayGen.getRandomNumberArray(size);
+            if (!insertionTimedOut) {
+                long startTime = System.nanoTime();
+                Insertion.sort(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Insertion Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    insertionTimedOut = true;
                 }
-            }
-        }
-        System.out.print(isUnstable + "\n\n");
-    }
 
-    /**
-     * Calls a known sort by name on the targeted array.
-     * @param sortName name of the sort we call ex: "Quick" for Quicksort
-     * @param arrayToBeSorted array we target with the selected sort
-     */
-    private static <E> void callKnownSortByName(String sortName, Comparable<E>[] arrayToBeSorted) {
-        switch(sortName){
-            case "Insertion":
-                Insertion.sort(arrayToBeSorted);
-                break;
-            case "Selection":
-                Selection.sort(arrayToBeSorted);
-                break;
-            case "Merge":
-                Merge.sort(arrayToBeSorted);
-                break;
-            case "Quick":
-                Quick.sort(arrayToBeSorted);
-                break;
+            } else {
+                //TODO print spacer
+            }
+            if (!selectionTimedOut) {
+                long startTime = System.nanoTime();
+                Selection.sort(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Selection Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    selectionTimedOut = true;
+                }
+            } else {
+                //TODO print spacer
+            }
+            if (!mergeTimedOut) {
+                long startTime = System.nanoTime();
+                Merge.sort(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Merge Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    mergeTimedOut = true;
+                }
+            } else {
+                //TODO print spacer
+            }
+            if (!quickTimedOut) {
+                long startTime = System.nanoTime();
+                Quick.sort(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Quick Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    quickTimedOut = true;
+                }
+            } else {
+                //TODO print spacer
+            }
+            size *= 2;
         }
+        //Testing length vs. time (8)
+
+
+
+//        //TODO
+//        //STABILITY TEST:
+//        String stable [] = stabilityTestData;
+//        Arrays.sort(stabilityTestData);
+//        String test [] = stabilityTestData;
+//        callKnownSortByName(sortName,test);
+//        System.out.println("\nSTABILITY:");
+//        System.out.printf(" * %sSort is Stable: ",
+//                sortName);
+//        boolean isUnstable = false;
+//
+//        for (String oneStable : stable) {
+//            for(String oneTest : test){
+//                if(oneStable != oneTest){
+//                    isUnstable = true;
+//                }
+//            }
+//        }
+//        System.out.print(isUnstable + "\n\n");
     }
 
     /**
      * Prints results for various tests on the mystery sorts.
-     * @param mysterySortNum number of the mystery sort we are testing ex: 1 for Mystery.sort1
      */
-    private static void getMysterySortTestResults(int mysterySortNum) {
-        //ERROR CATCHING:
-        if(mysterySortNum <= 0 || mysterySortNum > 4){
-            throw new IllegalArgumentException("This is not a valid sort methods number!");
+    private static void getMysterySortTestResults() {//todo array from outside method
+        //System.out.println("= = = = TESTING " + i.toUpperCase() + " SORT = = = =");
+        //System.out.println("\nTIME:"); TODO: need different header
+        int size = 1;
+        boolean sort1TimedOut = false;
+        boolean sort2TimedOut = false;
+        boolean sort3TimedOut = false;
+        boolean sort4TimedOut = false;
+        boolean allTimedOut = false;
+
+        while (!allTimedOut) {
+            allTimedOut = sort1TimedOut && sort2TimedOut && sort3TimedOut && sort4TimedOut;
+            Integer[] array = ArrayGen.getRandomNumberArray(size);
+            if (!sort1TimedOut) {
+                long startTime = System.nanoTime();
+                Mystery.sort1(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Sort1 Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    sort1TimedOut = true;
+                }
+
+            } else {
+                //TODO print spacer
+            }
+            if (!sort2TimedOut) {
+                long startTime = System.nanoTime();
+                Mystery.sort2(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Sort2 Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    sort2TimedOut = true;
+                }
+            } else {
+                //TODO print spacer
+            }
+            if (!sort3TimedOut) {
+                long startTime = System.nanoTime();
+                Mystery.sort3(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Sort3 Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    sort3TimedOut = true;
+                }
+            } else {
+                //TODO print spacer
+            }
+            if (!sort4TimedOut) {
+                long startTime = System.nanoTime();
+                Mystery.sort4(Arrays.copyOf(array, array.length));
+                long totalTime = System.nanoTime() - startTime;
+                System.out.printf(" * Sort4 Sort time for length  %d: %.8f seconds.\n",
+                        size, (totalTime) / BILLION);
+                if (totalTime > 5*BILLION){
+                    sort4TimedOut = true;
+                }
+            } else {
+                //TODO print spacer
+            }
+            size *= 2;
         }
-
-        //TIME TESTS:
-        System.out.println("= = = = TESTING SORT " + mysterySortNum + " = = = =");
-        System.out.println("\nTIME:");
-
-        //Testing length vs. time (8)
-        long startTime = System.nanoTime();
-        callMysterySortByNum(mysterySortNum, letterNumEight);
-        System.out.printf(" * MysterySort%d time for length  8: %.8f seconds.\n",
-                mysterySortNum, (System.nanoTime()-startTime)/BILLION);
-        resetEight();
-
-        //Testing length vs. time (16)
-        startTime = System.nanoTime();
-        callMysterySortByNum(mysterySortNum, letterNumSixteen);
-        System.out.printf(" * MysterySort%d time for length 16: %.8f seconds.\n",
-                mysterySortNum,(System.nanoTime()-startTime)/BILLION);
-        resetSixteen();
-
-        //Testing length vs. time (24)
-        startTime = System.nanoTime();
-        callMysterySortByNum(mysterySortNum, letterNumTwentyFour);
-        System.out.printf(" * MysterySort%d time for length 24: %.8f seconds.\n\n",
-                mysterySortNum,(System.nanoTime()-startTime)/BILLION);
-        resetTwentyFour();
-    }
-
-    /**
-     * Calls mystery sort by number on the targeted array.
-     * @param mysterySortNum number of the mystery sort we call ex: 1 for Mystery.sort1
-     * @param arrayToBeSorted array we target with the selected mystery sort
-     */
-    private static <E> void callMysterySortByNum(int mysterySortNum, Comparable<E>[] arrayToBeSorted) {
-        switch(mysterySortNum){
-            case 1:
-                Mystery.sort1(arrayToBeSorted);
-                break;
-            case 2:
-                Mystery.sort2(arrayToBeSorted);
-                break;
-            case 3:
-                Mystery.sort3(arrayToBeSorted);
-                break;
-            case 4:
-                Mystery.sort4(arrayToBeSorted);
-                break;
-        }
-    }
-
-
-    /**
-     * Resets the alpha-numeric Character array of size 8
-     * to the original scrambled values.
-     */
-    private static void resetEight(){
-        letterNumEight  = new Character[]{'c', 'd', 'a', 'b', '3', '2', '1', '4'};
-    }
-
-    /**
-     * Resets the alpha-numeric Character array of size 16
-     * to the original scrambled values.
-     */
-    private static void resetSixteen(){
-        letterNumSixteen  = new Character[]{
-            'c', 'd', 'a', 'b', '3', '2', '1', '4',
-            'c', 'd', 'a', 'b', '3', '2', '1', '4'};
-    }
-
-    /**
-     * Resets the alpha-numeric Character array of size 24
-     * to the original scrambled values.
-     */
-    private static void resetTwentyFour(){
-        letterNumTwentyFour  = new Character[]{
-                'c', 'd', 'a', 'b', '3', '2', '1', '4',
-                'c', 'd', 'a', 'b', '3', '2', '1', '4',
-                'c', 'd', 'a', 'b', '3', '2', '1', '4'};
     }
 
     // = = = = TEST CLIENT = = = = //
     public static void main (String[] args){
-        for (String sortName:
-                SORTNAMES) {
-            getKnownSortTestResults(sortName);
-        }
-
-        for (int i = 1; i < 5; i++) {
-            getMysterySortTestResults(i);
-        }
-
-
+        getKnownSortTestResults();
+        getMysterySortTestResults();
     }
 }
