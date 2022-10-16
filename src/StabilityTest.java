@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 
 public class StabilityTest {
-    static final double BILLION = 1_000_000_000;
     private static final String [] SORTNAMES = {"Insertion", "Selection", "Merge", "Quick"};
 
     private static void getKnownSortTestResults(String sortName){
