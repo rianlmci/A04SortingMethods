@@ -1,12 +1,23 @@
+package A04Mystery;
+
 import csis.Mystery;
 import edu.princeton.cs.algs4.*;
 import java.util.Arrays;
 
-
+/**
+ * Tests for stability. Tests and Prints information about the four known and unknown sorting tests.
+ * @author Rianna McIntyre
+ */
 public class StabilityTest {
-    private static final String [] SORTNAMES = {"Insertion", "Selection", "Merge", "Quick"};
+    public static final String [] SORTNAMES = {"Insertion", "Selection", "Merge", "Quick"};
 
-    private static void getKnownSortTestResults(String sortName){
+    /**
+     * Prints results of sorting a specified array,
+     * showing if they are stable or not by comparing their output
+     * with a known stable sorting method (Arrays.sort)
+     * @param sortName name of the known sort
+     */
+    static void getKnownSortTestResults(String sortName){
         StringNum [] stableList = StringNum.getListOne();
         Arrays.sort(stableList);
         StringNum [] testList = StringNum.getListOne();
@@ -15,11 +26,17 @@ public class StabilityTest {
                 Arrays.deepToString(stableList));
         System.out.printf(" * %9sSort Array: %s \n",
                 sortName, Arrays.deepToString(testList));
-
-        System.out.printf(" * %sSort is stable: %b!\n\n", sortName, Arrays.deepToString(stableList).equals(Arrays.deepToString(testList)));
+        System.out.printf(" * %sSort is stable: %b!\n\n",
+                sortName, Arrays.deepToString(stableList).equals(Arrays.deepToString(testList)));
     }
 
-    private static void getMysterySortTestResults(int sortNum){
+    /**
+     * Prints results of sorting a specified array,
+     * showing if they are stable or not by comparing their output
+     * with a known stable sorting method (Arrays.sort)
+     * @param sortNum number of the mystery sort
+     */
+    static void getMysterySortTestResults(int sortNum){
         StringNum [] stableList = StringNum.getListOne();
         Arrays.sort(stableList);
         StringNum [] testList = StringNum.getListOne();
@@ -28,9 +45,9 @@ public class StabilityTest {
                 Arrays.deepToString(stableList));
         System.out.printf(" * MysterySort%d Array:  %s \n",
                 sortNum, Arrays.deepToString(testList));
-        System.out.printf(" * MysterySort%d is stable: %b! \n\n", sortNum, Arrays.deepToString(stableList).equals(Arrays.deepToString(testList)));
+        System.out.printf(" * MysterySort%d is stable: %b! \n\n",
+                sortNum, Arrays.deepToString(stableList).equals(Arrays.deepToString(testList)));
     }
-
 
     /**
      * Calls a known sort by name on the targeted array.
@@ -76,17 +93,19 @@ public class StabilityTest {
                 break;
         }
     }
+    // = = = = TEST CLIENT FOR CLASS = = = = //
     public static void main (String args [] ) {
         System.out.println();
         System.out.println("KNOWN SORT STABILITY:");
-        System.out.println(" //expected: InsertionSort (true), SelectionSort (false), Mergesort (true), Quicksort (false)//\n");
-        for (String oneName : SORTNAMES
-             ) {
+        System.out.println(
+                " //expected: InsertionSort (true), SelectionSort (false), Mergesort (true), Quicksort (false)//\n");
+        for (String oneName : SORTNAMES) {
             getKnownSortTestResults(oneName);
         }
 
         System.out.println("MYSTERY SORT STABILITY:");
-        System.out.println(" //expected: InsertionSort (true), SelectionSort (false), Mergesort (true), Quicksort (false)//\n");
+        System.out.println(
+                " //expected: InsertionSort (true), SelectionSort (false), Mergesort (true), Quicksort (false)//\n");
         for (int i = 0; i < 4; i++) {
             getMysterySortTestResults(i+1);
         }

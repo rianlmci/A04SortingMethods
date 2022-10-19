@@ -1,3 +1,5 @@
+package A04Mystery;
+
 import java.util.Random;
 
 public class ArrayGen {

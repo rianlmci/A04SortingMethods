@@ -1,3 +1,5 @@
+package A04Mystery;
+
 /**
  * Class implementation taken from StackOverFlow:
  * <a href= https://stackoverflow.com/questions/60068478/create-a-method-to-check-if-sorting-algorithm-is-stable>source</a>.

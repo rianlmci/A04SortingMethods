@@ -1,9 +1,16 @@
+package A04Mystery;
+
 import csis.Mystery;
 import edu.princeton.cs.algs4.*;
 
 import java.util.Arrays;
 
-
+/**
+ * Tests for timing how long each sorting method takes.
+ * Specifically,it tests and Prints timing information about the four known and unknown sorting tests.
+ * Also, it contains the main method.
+ * @author Eric Rytting, starter code by Rianna McIntyre.
+ */
 public class A04 {
     static final double BILLION = 1_000_000_000;
     private static String[] genMode = {
@@ -85,29 +92,6 @@ public class A04 {
             }
             System.out.println("    ---------------------------- ---------------------------- ---------------------------- ----------------------------");
         }
-        //Testing length vs. time (8)
-
-
-
-//        //TODO
-//        //STABILITY TEST:
-//        String stable [] = stabilityTestData;
-//        Arrays.sort(stabilityTestData);
-//        String test [] = stabilityTestData;
-//        callKnownSortByName(sortName,test);
-//        System.out.println("\nSTABILITY:");
-//        System.out.printf(" * %sSort is Stable: ",
-//                sortName);
-//        boolean isUnstable = false;
-//
-//        for (String oneStable : stable) {
-//            for(String oneTest : test){
-//                if(oneStable != oneTest){
-//                    isUnstable = true;
-//                }
-//            }
-//        }
-//        System.out.print(isUnstable + "\n\n");
     }
 
     private static Integer[] callGenMode(int genMode, int size){
@@ -123,7 +107,7 @@ public class A04 {
     /**
      * Prints results for various tests on the mystery sorts.
      */
-    private static void getMysterySortTestResults() {//todo array from outside method?
+    private static void getMysterySortTestResults() {
         for (int i = 0; i < 4; i++) {
             System.out.println();
             System.out.println("    Using " + genMode[i] + " arrays");
@@ -199,7 +183,23 @@ public class A04 {
 
     // = = = = TEST CLIENT = = = = //
     public static void main (String[] args){
+        //TIMING TESTS:
         getKnownSortTestResults();
         getMysterySortTestResults();
+        //STABILITY TESTS:
+        System.out.println();
+        System.out.println("KNOWN SORT STABILITY:");
+        System.out.println(
+                " //expected: InsertionSort (true), SelectionSort (false), Mergesort (true), Quicksort (false)//\n");
+        for (String oneName : StabilityTest.SORTNAMES) {
+            StabilityTest.getKnownSortTestResults(oneName);
+        }
+
+        System.out.println("MYSTERY SORT STABILITY:");
+        System.out.println(
+                " //expected: InsertionSort (true), SelectionSort (false), Mergesort (true), Quicksort (false)//\n");
+        for (int i = 0; i < 4; i++) {
+            StabilityTest.getMysterySortTestResults(i+1);
+        }
     }
 }
